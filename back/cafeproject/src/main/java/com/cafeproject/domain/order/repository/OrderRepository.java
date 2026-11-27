@@ -2,6 +2,8 @@ package com.cafeproject.domain.order.repository;
 
 import com.cafeproject.domain.order.entity.Order;
 import com.cafeproject.domain.order.entity.OrderStatus;
+import jakarta.persistence.Entity;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -25,5 +27,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             String email, LocalDate deliveryDate, String zipcode, String address, OrderStatus status);
 
     // 내 주문 조회용 (#127): 이메일로 찾고 배송일 최신순
+    @EntityGraph(attributePaths = {"items", "items.product"})
     List<Order> findAllByEmailOrderByDeliveryDateDesc(String email);
 }
