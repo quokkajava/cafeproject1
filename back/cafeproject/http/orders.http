@@ -1,0 +1,11 @@
+### 1. 주문 있는 이메일 → 200, 주문 2건 (배송일 최신순)
+GET http://localhost:8080/api/orders?email=test@example.com
+
+### 2. 주문 없는 이메일 → 200, data: []
+GET http://localhost:8080/api/orders?email=none@example.com
+
+### 3. 잘못된 이메일 형식 → 400, code "3"
+GET http://localhost:8080/api/orders?email=wrong
+
+### 4. 이메일 누락 → 400, code "6"
+GET http://localhost:8080/api/orders
