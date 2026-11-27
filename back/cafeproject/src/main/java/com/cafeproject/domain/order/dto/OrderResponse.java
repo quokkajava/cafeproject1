@@ -47,8 +47,8 @@ public record OrderResponse(
                 order.getItems().stream()
                         .map(OrderItemResponse::from)
                         .toList(),
-                order.getCreatedAt(),
-                order.getUpdatedAt()
+                order.getCreateDate(),
+                order.getModifyDate()
         );
     }
 }
