@@ -7,6 +7,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
@@ -40,6 +42,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<RsData<Void>> handleMissingParam(MissingServletRequestParameterException e) {
         return toResponse(CommonError.MISSING_PARAMETER);
+    }
+
+    // @RepuestParam, @PathVariable 검증 실패 (예: @Email, @NotBlank)
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<RsData<Void>>
+    handleMethodValidation(HandlerMethodValidationException e) {
+        return toResponse(CommonError.INVALID_INPUT_VALUE);
+    }
+
+    // 타입 불일치 (예: /api/orders/abc)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<RsData<Void>>
+    handleTypeMismatch(MethodArgumentTypeMismatchException e) {
+        return toResponse(CommonError.INVALID_TYPE_VALUE);
     }
 
     // 지원하지 않는 HTTP 메서드
