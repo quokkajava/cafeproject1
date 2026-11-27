@@ -19,4 +19,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>  {
     void truncateProductTable();
 
     Optional<Product> findFirstByOrderByIdDesc();
+    Optional<Product> findByIdAndOnSaleTrue(Long id);
 }

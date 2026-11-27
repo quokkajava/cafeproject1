@@ -1,6 +1,8 @@
 package com.cafeproject.domain.product.service;
 
 import com.cafeproject.domain.product.controller.AdminProductController;
+import com.cafeproject.domain.product.controller.ProductController;
+import com.cafeproject.domain.product.dto.CustomerProductDTO;
 import com.cafeproject.domain.product.dto.ProductRequestDTO;
 import com.cafeproject.domain.product.entity.Product;
 import com.cafeproject.domain.product.repository.ProductRepository;
@@ -101,5 +103,14 @@ public class ProductService {
         }
 
         return product.get();
+    }
+
+    public CustomerProductDTO findOnSaleById(long id) {
+        Optional<Product> product = productRepository.findByIdAndOnSaleTrue(id);
+        if (product.isEmpty()){
+            throw new BusinessException(ProductError.NOT_FOUND);
+        }
+        Product _product = product.get();
+        return new CustomerProductDTO(_product);
     }
 }
